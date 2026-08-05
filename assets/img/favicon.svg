@@ -1,16 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#E28FA3"/><stop offset="1" stop-color="#C2415C"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#D9526C"/><stop offset="1" stop-color="#9C2F45"/>
     </linearGradient>
+    <linearGradient id="petal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FBE3E9"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#F4CE7E"/><stop offset="1" stop-color="#B8934A"/>
+    </radialGradient>
   </defs>
-  <rect width="64" height="64" rx="16" fill="#2A1418"/>
-  <g transform="translate(32 31)" fill="url(#g)">
-    <ellipse cx="0" cy="-13" rx="7" ry="12"/>
-    <ellipse cx="0" cy="-13" rx="7" ry="12" transform="rotate(72)"/>
-    <ellipse cx="0" cy="-13" rx="7" ry="12" transform="rotate(144)"/>
-    <ellipse cx="0" cy="-13" rx="7" ry="12" transform="rotate(216)"/>
-    <ellipse cx="0" cy="-13" rx="7" ry="12" transform="rotate(288)"/>
+
+  <path d="M0 18 Q0 0 18 0 H46 Q64 0 64 18 V46 Q64 64 46 64 H18 Q0 64 0 46 Z" fill="url(#bg)"/>
+
+  <g transform="translate(32 33)">
+    <g fill="url(#petal)">
+      <ellipse cx="0" cy="-12.5" rx="8.6" ry="13" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-12.5" rx="8.6" ry="13" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-12.5" rx="8.6" ry="13" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-12.5" rx="8.6" ry="13" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-12.5" rx="8.6" ry="13" transform="rotate(288)"/>
+    </g>
+    <g fill="#9C2F45" opacity="0.16">
+      <path d="M0 -3 L2.4 -9.5 A9 9 0 010 -15 A9 9 0 01-2.4 -9.5 Z" transform="rotate(0)"/>
+      <path d="M0 -3 L2.4 -9.5 A9 9 0 010 -15 A9 9 0 01-2.4 -9.5 Z" transform="rotate(72)"/>
+      <path d="M0 -3 L2.4 -9.5 A9 9 0 010 -15 A9 9 0 01-2.4 -9.5 Z" transform="rotate(144)"/>
+      <path d="M0 -3 L2.4 -9.5 A9 9 0 010 -15 A9 9 0 01-2.4 -9.5 Z" transform="rotate(216)"/>
+      <path d="M0 -3 L2.4 -9.5 A9 9 0 010 -15 A9 9 0 01-2.4 -9.5 Z" transform="rotate(288)"/>
+    </g>
+    <circle cx="0" cy="0" r="7.4" fill="url(#core)"/>
   </g>
-  <circle cx="32" cy="31" r="5.5" fill="#B8934A"/>
 </svg>
