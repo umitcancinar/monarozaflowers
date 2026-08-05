@@ -509,6 +509,11 @@ const livePreview = debounce(() => {
 }, 260);
 
 /* ================= DOSYA / GÖRSEL ================= */
+/**
+ * Görsel seçici. Sunucu (REST) modundaysa dosya ImgBB'ye yüklenir ve
+ * sadece barındırılan URL saklanır (DB şişmez, site hızlı kalır).
+ * Sunucu yoksa (local mod) eski davranış: küçük görseller base64 olarak gömülür.
+ */
 function pickImage(path, onDone) {
   const input = document.createElement('input');
   input.type = 'file';
@@ -516,8 +521,36 @@ function pickImage(path, onDone) {
   input.onchange = () => {
     const file = input.files?.[0];
     if (!file) return;
+
+    if (isRestMode()) {
+      if (file.size > 12 * 1024 * 1024) {
+        toast('Görsel çok büyük', 'En fazla 12 MB yükleyin', 'warn');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = async () => {
+        toast('Yükleniyor…', file.name);
+        try {
+          const res = await fetch(apiUrl('/upload'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', ...authHeaders() },
+            body: JSON.stringify({ image: reader.result, name: file.name })
+          });
+          const body = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(body.error || 'Yükleme başarısız');
+          onDone(body.url);
+          toast('Görsel yüklendi ve barındırıldı');
+        } catch (err) {
+          toast('Sunucuya yüklenemedi', err.message + ' — geçici olarak tarayıcıda saklanıyor', 'warn');
+          if (file.size <= 900 * 1024) onDone(reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+      return;
+    }
+
     if (file.size > 900 * 1024) {
-      toast('Görsel çok büyük', 'En fazla ~900 KB yükleyin ya da URL kullanın', 'warn');
+      toast('Görsel çok büyük', 'Local modda en fazla ~900 KB — Sistem sekmesinden REST moduna geçerek ImgBB üzerinden büyük görsel yükleyebilirsiniz', 'warn');
       return;
     }
     const reader = new FileReader();

@@ -8,7 +8,7 @@ import { store } from './core/store.js';
 import { renderAll } from './modules/render.js';
 import {
   initPreloader, initReveal, observeReveal, initHeader, initAnchors,
-  initCursor, initMagnetic, initParallax, initCounters, initPetals
+  initMagnetic, initParallax, initCounters, initPetals
 } from './modules/motion.js';
 import {
   initMobileMenu, initTheme, initScrollTop, initFaq, initTestimonials,
@@ -50,7 +50,6 @@ async function boot() {
   initReveal();
   initHeader();
   initAnchors();
-  initCursor();
   initMagnetic();
   initParallax();
   initCounters();

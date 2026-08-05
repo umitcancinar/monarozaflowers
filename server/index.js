@@ -101,6 +101,36 @@ app.put('/api/content', auth, async (req, res) => {
   }
 });
 
+/* ---------- Görsel Yükleme (ImgBB) ----------
+   Admin panelinden yüklenen görseller DB'ye base64 gömülmesin diye
+   ImgBB'ye yüklenir, sadece hosted URL saklanır. API anahtarı sadece
+   sunucuda tutulur, tarayıcıya asla gönderilmez. */
+const IMGBB_API_KEY = process.env.IMGBB_API_KEY || '';
+
+app.post('/api/upload', auth, rateLimit({ max: 30 }), async (req, res) => {
+  if (!IMGBB_API_KEY) return res.status(503).json({ error: 'IMGBB_API_KEY tanımlı değil' });
+  const dataUrl = String(req.body?.image || '');
+  const base64 = dataUrl.replace(/^data:image\/\w+;base64,/, '');
+  if (!base64 || base64.length > 9_000_000) {
+    return res.status(400).json({ error: 'Geçersiz veya çok büyük görsel' });
+  }
+  try {
+    const form = new URLSearchParams();
+    form.set('key', IMGBB_API_KEY);
+    form.set('image', base64);
+    if (req.body?.name) form.set('name', String(req.body.name).slice(0, 80));
+
+    const upstream = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: form });
+    const body = await upstream.json();
+    if (!upstream.ok || !body?.data?.url) {
+      return res.status(502).json({ error: body?.error?.message || 'ImgBB yüklemesi başarısız' });
+    }
+    res.json({ url: body.data.url, thumb: body.data.thumb?.url || body.data.url, deleteUrl: body.data.delete_url });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 /* ---------- Siparişler ---------- */
 app.post('/api/orders', rateLimit({ max: 40 }), async (req, res) => {
   const { ref, items, note, total, count, customer } = req.body || {};
