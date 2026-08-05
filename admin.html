@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Yönetim Paneli — Mona Roza Flowers</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+
+<!-- GİRİŞ -->
+<div class="gate" id="login-gate">
+  <div class="gate-card">
+    <div class="gate-logo">
+      <svg viewBox="0 0 64 64" width="52" height="52">
+        <g transform="translate(32 31)" fill="currentColor">
+          <ellipse cx="0" cy="-13" rx="7" ry="12"/>
+          <ellipse cx="0" cy="-13" rx="7" ry="12" transform="rotate(72)"/>
+          <ellipse cx="0" cy="-13" rx="7" ry="12" transform="rotate(144)"/>
+          <ellipse cx="0" cy="-13" rx="7" ry="12" transform="rotate(216)"/>
+          <ellipse cx="0" cy="-13" rx="7" ry="12" transform="rotate(288)"/>
+        </g>
+        <circle cx="32" cy="31" r="5.5" fill="#B8934A"/>
+      </svg>
+    </div>
+    <h1>Yönetim Paneli</h1>
+    <p id="gate-desc">Devam etmek için şifrenizi girin.</p>
+    <input type="email" id="gate-email" placeholder="E-posta" autocomplete="username" hidden>
+    <input type="password" id="pin-input" placeholder="••••" autocomplete="current-password">
+    <button id="pin-btn" class="btn primary btn-block">Giriş Yap</button>
+    <small id="pin-error"></small>
+    <small class="gate-hint" id="gate-hint">İlk giriş şifresi: <b>1234</b> — Sistem sekmesinden değiştirin.</small>
+  </div>
+</div>
+
+<!-- ÜST BAR -->
+<header class="topbar">
+  <button class="icon-btn only-mobile" id="burger-admin" aria-label="Menü">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <div class="tb-brand">
+    <span class="tb-mark">M</span>
+    <div><strong id="brand-name">MONA ROZA</strong><small>Yönetim Paneli</small></div>
+  </div>
+
+  <div class="tb-spacer"></div>
+
+  <span class="dirty" id="dirty-dot" title="Kaydedilmemiş değişiklik"></span>
+  <button class="icon-btn" id="preview-toggle" title="Canlı önizleme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3"/></svg>
+  </button>
+  <button class="icon-btn" id="theme-admin" title="Tema">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+  </button>
+  <a class="icon-btn" href="index.html" target="_blank" rel="noopener" title="Siteyi aç">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-8 8M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/></svg>
+  </a>
+  <button class="icon-btn" id="logout-btn" title="Çıkış">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H5a1 1 0 00-1 1v14a1 1 0 001 1h4M16 17l5-5-5-5M21 12H9"/></svg>
+  </button>
+</header>
+
+<!-- GÖVDE -->
+<div class="layout">
+  <nav class="sidebar" id="side-nav"></nav>
+  <nav class="mobile-nav" id="mobile-nav"></nav>
+
+  <main class="panel">
+    <div class="panel-head">
+      <h2 id="panel-title">Genel Bakış</h2>
+    </div>
+    <div class="panel-body" id="panel-body"></div>
+  </main>
+
+  <aside class="preview">
+    <div class="preview-head">
+      <span>Canlı Önizleme</span>
+      <button class="mini ghost" onclick="document.getElementById('preview-frame').contentWindow.location.reload()">Yenile</button>
+    </div>
+    <iframe id="preview-frame" title="Önizleme"></iframe>
+  </aside>
+</div>
+
+<!-- KAYDET ÇUBUĞU -->
+<div class="save-bar" id="save-bar">
+  <span>Kaydedilmemiş değişiklikleriniz var.</span>
+  <div>
+    <button class="btn ghost" id="revert-btn">Geri Al</button>
+    <button class="btn primary" id="save-btn">Kaydet & Yayınla</button>
+  </div>
+</div>
+
+<!-- ÜRÜN DÜZENLEYİCİ -->
+<div class="modal" id="prod-modal">
+  <div class="modal-card">
+    <header class="modal-head">
+      <h3 id="prod-modal-title">Ürün</h3>
+      <button class="icon-btn" id="prod-close" aria-label="Kapat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </header>
+    <div class="modal-body" id="prod-form"></div>
+    <footer class="modal-foot">
+      <button class="btn primary" onclick="document.getElementById('prod-close').click()">Tamam</button>
+    </footer>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script type="module" src="assets/js/admin/main.js"></script>
+</body>
+</html>

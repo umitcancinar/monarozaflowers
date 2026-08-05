@@ -1,0 +1,17 @@
+# bağımlılıklar
+/node_modules
+
+# ortam değişkenleri — asla depoya girmemeli
+.env
+.env.local
+.env.*.local
+
+# sistem
+.DS_Store
+*.log
+
+# geçici
+_imgcheck.html
+
+# eski restoran projesinin yerel referans kopyası — bu depoya dahil değil
+_ref_restoran

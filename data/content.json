@@ -1,0 +1,915 @@
+{
+  "meta": {
+    "schema": 1,
+    "sector": "florist",
+    "locale": "tr-TR",
+    "currency": "TRY",
+    "currencySymbol": "₺",
+    "updatedAt": "2026-08-05T00:00:00.000Z"
+  },
+  "brand": {
+    "name": "MONA ROZA",
+    "accent": "FLOWERS",
+    "monogram": "M",
+    "tagline": "Çiçek Atölyesi",
+    "logoImage": "",
+    "established": "2014",
+    "seo": {
+      "title": "Mona Roza Flowers — Çiçek Atölyesi",
+      "description": "Mona Roza Flowers; el yapımı buketler, kutuda çiçekler, orkideler ve özel tasarım aranjmanlar. Aynı gün teslimat, taze çiçek garantisi.",
+      "keywords": "çiçekçi, buket, kutuda çiçek, orkide, çiçek siparişi, aynı gün teslimat",
+      "ogImage": "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=1200&q=85"
+    }
+  },
+  "theme": {
+    "mode": "light",
+    "allowToggle": true,
+    "colors": {
+      "accent": "#C2415C",
+      "accent2": "#E28FA3",
+      "gold": "#B8934A",
+      "deep": "#2A1418",
+      "cream": "#FBF6F2"
+    },
+    "radius": 20,
+    "fontDisplay": "Cormorant Garamond",
+    "fontBody": "Manrope"
+  },
+  "nav": {
+    "links": [
+      {
+        "label": "Anasayfa",
+        "href": "#hero"
+      },
+      {
+        "label": "Hakkımızda",
+        "href": "#about"
+      },
+      {
+        "label": "Koleksiyon",
+        "href": "#collections"
+      },
+      {
+        "label": "Ürünler",
+        "href": "#products"
+      },
+      {
+        "label": "Atölye",
+        "href": "#atelier"
+      },
+      {
+        "label": "Galeri",
+        "href": "#gallery"
+      },
+      {
+        "label": "İletişim",
+        "href": "#contact"
+      }
+    ],
+    "cta": {
+      "label": "Sipariş Ver",
+      "href": "#products"
+    }
+  },
+  "sections": {
+    "hero": {
+      "enabled": true,
+      "eyebrow": "2014'ten beri el emeği çiçek tasarımı",
+      "titleLines": [
+        "Her buket",
+        "bir duygunun",
+        "imzasıdır"
+      ],
+      "highlight": "duygunun",
+      "desc": "Mevsiminde toplanan taze çiçekler, atölyemizde tek tek elden geçirilir. Siz sadece anlatın; gerisini biz çiçeklerle yazalım.",
+      "media": {
+        "type": "image",
+        "src": "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=1800&q=85",
+        "video": "",
+        "poster": "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=1800&q=85"
+      },
+      "buttons": [
+        {
+          "label": "Koleksiyonu Keşfet",
+          "href": "#products",
+          "style": "primary"
+        },
+        {
+          "label": "Hikâyemiz",
+          "href": "#about",
+          "style": "ghost"
+        }
+      ],
+      "stats": [
+        {
+          "value": "12",
+          "suffix": "K+",
+          "label": "Mutlu Teslimat"
+        },
+        {
+          "value": "48",
+          "suffix": "",
+          "label": "Tasarım Çeşidi"
+        },
+        {
+          "value": "2",
+          "suffix": " Saat",
+          "label": "Aynı Gün Teslim"
+        }
+      ],
+      "scrollHint": "Kaydır"
+    },
+    "marquee": {
+      "enabled": true,
+      "items": [
+        "TAZE ÇİÇEK GARANTİSİ",
+        "AYNI GÜN TESLİMAT",
+        "EL YAPIMI ARANJMAN",
+        "ÜCRETSİZ NOT KARTI",
+        "7/24 WHATSAPP SİPARİŞ",
+        "ÖZEL TASARIM"
+      ]
+    },
+    "about": {
+      "enabled": true,
+      "eyebrow": "Hakkımızda",
+      "title": "Çiçeği bir ürün değil, bir cümle olarak görüyoruz",
+      "text": "Mona Roza Flowers, 2014 yılında küçük bir atölyede kuruldu. Bugün hâlâ aynı prensiple çalışıyoruz: her sabah taze çiçek, her tasarımda elle dokunuş ve her siparişte kişiye özel bir hikâye. Hollanda menşeli güllerden yerli mevsim çiçeklerine kadar tüm ürünlerimizi günlük olarak temin ediyor, aranjmanlarımızı siparişten sonra hazırlıyoruz.",
+      "signature": "Mona Roza Atölye Ekibi",
+      "images": {
+        "main": "https://images.unsplash.com/photo-1487070183336-b863922373d4?auto=format&fit=crop&w=900&q=85",
+        "sub": "https://images.unsplash.com/photo-1596438459194-f275f413d6ff?auto=format&fit=crop&w=700&q=85"
+      },
+      "badge": {
+        "value": "10+",
+        "label": "Yıllık Atölye Tecrübesi"
+      },
+      "features": [
+        {
+          "icon": "leaf",
+          "title": "Günlük Taze Çiçek",
+          "text": "Her sabah halden gelen, aynı gün işlenen çiçekler."
+        },
+        {
+          "icon": "hand",
+          "title": "El Yapımı Tasarım",
+          "text": "Şablon yok; her aranjman siparişe özel kurgulanır."
+        },
+        {
+          "icon": "truck",
+          "title": "Hızlı Teslimat",
+          "text": "Şehir içi 2 saat, ilçelere aynı gün teslimat."
+        },
+        {
+          "icon": "heart",
+          "title": "Kişiye Özel Not",
+          "text": "Ücretsiz el yazısı not kartı ve hediye paketi."
+        }
+      ]
+    },
+    "collections": {
+      "enabled": true,
+      "eyebrow": "Koleksiyonlar",
+      "title": "Anın hangisiyse, çiçeği burada",
+      "desc": "Her duygunun bir rengi var. Doğru olanı seçmenize yardım edelim.",
+      "items": [
+        {
+          "id": "col-1",
+          "title": "Romantik",
+          "text": "Gül, şakayık ve pastel tonlar",
+          "image": "https://images.unsplash.com/photo-1591886960571-74d43a9d4166?auto=format&fit=crop&w=900&q=85",
+          "filter": "buketler",
+          "size": "lg"
+        },
+        {
+          "id": "col-2",
+          "title": "Kutuda Çiçek",
+          "text": "Şık kutularda kalıcı zarafet",
+          "image": "https://images.unsplash.com/photo-1457089328109-e5d9bd499191?auto=format&fit=crop&w=900&q=85",
+          "filter": "kutuda-cicek",
+          "size": "sm"
+        },
+        {
+          "id": "col-3",
+          "title": "Orkide",
+          "text": "Uzun ömürlü, prestijli hediye",
+          "image": "https://images.unsplash.com/photo-1471696035578-3d8c78d99684?auto=format&fit=crop&w=900&q=85",
+          "filter": "orkideler",
+          "size": "sm"
+        },
+        {
+          "id": "col-4",
+          "title": "Saksı & Teraryum",
+          "text": "Yeşilin ev hâli",
+          "image": "https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=900&q=85",
+          "filter": "saksi-teraryum",
+          "size": "sm"
+        },
+        {
+          "id": "col-5",
+          "title": "Düğün & Nişan",
+          "text": "Gelin buketi ve masa tasarımları",
+          "image": "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=900&q=85",
+          "filter": "dugun-nisan",
+          "size": "md"
+        }
+      ]
+    },
+    "wheel": {
+      "enabled": true,
+      "eyebrow": "Atölye Vitrini",
+      "title": "Kaydırdıkça açan tasarımlar",
+      "desc": "Bu sezon en çok tercih edilen aranjmanlar, tek tek elden geçti.",
+      "items": [
+        {
+          "image": "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=600&q=85",
+          "label": "Pastel Zarafet"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?auto=format&fit=crop&w=600&q=85",
+          "label": "Kırmızı Gül"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=85",
+          "label": "Lale Bahçesi"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1591886960571-74d43a9d4166?auto=format&fit=crop&w=600&q=85",
+          "label": "Pudra Şakayık"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1533616688419-b7a585564566?auto=format&fit=crop&w=600&q=85",
+          "label": "Vahşi Bahar"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1462530260150-162092dbf011?auto=format&fit=crop&w=600&q=85",
+          "label": "Beyaz Zarafet"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1546842931-886c185b4c8c?auto=format&fit=crop&w=600&q=85",
+          "label": "Yaz Dahlyası"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1471696035578-3d8c78d99684?auto=format&fit=crop&w=600&q=85",
+          "label": "Mor Esinti"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1502977249166-824b3a8a4d6d?auto=format&fit=crop&w=600&q=85",
+          "label": "Zambak Işıltısı"
+        }
+      ]
+    },
+    "products": {
+      "enabled": true,
+      "eyebrow": "Ürünler",
+      "title": "Sepete ekleyin, WhatsApp'tan tamamlayın",
+      "desc": "Her ürünün kendine ait bir kodu var. Sipariş mesajınıza otomatik eklenir.",
+      "showFilter": true,
+      "pageSize": 9
+    },
+    "atelier": {
+      "enabled": true,
+      "eyebrow": "Atölyeden",
+      "title": "Bir buket nasıl doğar?",
+      "desc": "Sabah 06:00'da halde başlayan yolculuk, kapınızda bir gülümsemeyle biter.",
+      "media": {
+        "video": "",
+        "poster": "https://images.unsplash.com/photo-1591886960571-74d43a9d4166?auto=format&fit=crop&w=1600&q=85"
+      },
+      "steps": [
+        {
+          "no": "01",
+          "title": "Seçim",
+          "text": "Her sabah halden, tazeliği elle kontrol edilerek seçilir."
+        },
+        {
+          "no": "02",
+          "title": "Temizlik",
+          "text": "Sap kesimi, yaprak temizliği ve suda dinlendirme yapılır."
+        },
+        {
+          "no": "03",
+          "title": "Tasarım",
+          "text": "Renk armonisi ve doku dengesiyle elde şekillendirilir."
+        },
+        {
+          "no": "04",
+          "title": "Teslim",
+          "text": "Su haznesi ve not kartıyla, soğuk zincirle yola çıkar."
+        }
+      ]
+    },
+    "occasions": {
+      "enabled": true,
+      "eyebrow": "Özel Günler",
+      "title": "Unutulmaması gereken günler için",
+      "items": [
+        {
+          "icon": "heart",
+          "title": "Sevgililer Günü",
+          "text": "Gül ve şakayık odaklı romantik seçkiler."
+        },
+        {
+          "icon": "gift",
+          "title": "Doğum Günü",
+          "text": "Renkli, neşeli ve balonlu kombinler."
+        },
+        {
+          "icon": "rings",
+          "title": "Düğün & Nişan",
+          "text": "Gelin buketi, masa ve kapı süslemeleri."
+        },
+        {
+          "icon": "baby",
+          "title": "Yeni Doğan",
+          "text": "Pastel tonlarda hoş geldin aranjmanları."
+        },
+        {
+          "icon": "briefcase",
+          "title": "Açılış & Kurumsal",
+          "text": "Ferforje, çelenk ve kurumsal anlaşmalar."
+        },
+        {
+          "icon": "leaf",
+          "title": "Taziye",
+          "text": "Sade ve saygılı çelenk tasarımları."
+        }
+      ]
+    },
+    "gallery": {
+      "enabled": true,
+      "eyebrow": "Galeri",
+      "title": "Atölyemizden kareler",
+      "desc": "Instagram hesabımızda her gün yeni tasarımlar paylaşıyoruz.",
+      "items": [
+        {
+          "image": "https://images.unsplash.com/photo-1487070183336-b863922373d4?auto=format&fit=crop&w=800&q=85",
+          "caption": "Atölye vitrinimiz"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=85",
+          "caption": "Tek dal zarafet"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1455659817273-f96807779a8a?auto=format&fit=crop&w=800&q=85",
+          "caption": "Ayçiçeği tarlası"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800&q=85",
+          "caption": "Mevsim çiçekleri"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1464982326199-86f32f81b211?auto=format&fit=crop&w=800&q=85",
+          "caption": "Pudra karanfiller"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=85",
+          "caption": "Sevgiyle hazırlandı"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1524386416438-98b9b2d4b433?auto=format&fit=crop&w=800&q=85",
+          "caption": "Bahar laleleri"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=800&q=85",
+          "caption": "Kır çiçekleri"
+        }
+      ]
+    },
+    "testimonials": {
+      "enabled": true,
+      "eyebrow": "Yorumlar",
+      "title": "Müşterilerimiz ne diyor?",
+      "items": [
+        {
+          "name": "Elif Yıldırım",
+          "role": "İstanbul",
+          "rating": 5,
+          "text": "Nişan masamızı Mona Roza hazırladı. Fotoğraflarda gördüğümüzden çok daha güzeldi, herkes çiçekleri sordu.",
+          "avatar": ""
+        },
+        {
+          "name": "Burak Demir",
+          "role": "Ankara",
+          "rating": 5,
+          "text": "Sabah sipariş verdim, öğlen eşimin ofisindeydi. Not kartı el yazısıyla yazılmıştı, detay çok hoşuma gitti.",
+          "avatar": ""
+        },
+        {
+          "name": "Selin Kaya",
+          "role": "İzmir",
+          "rating": 5,
+          "text": "Orkideyi 4 aydır bakıyorum, hâlâ çiçekte. Bakım kartı da veriyorlar, gerçekten işini bilen bir ekip.",
+          "avatar": ""
+        },
+        {
+          "name": "Mert Aslan",
+          "role": "Bursa",
+          "rating": 5,
+          "text": "Kurumsal açılışımız için çelenk yaptırdık. Zamanında, kusursuz ve fiyatı gayet makuldü.",
+          "avatar": ""
+        }
+      ]
+    },
+    "faq": {
+      "enabled": true,
+      "eyebrow": "Sıkça Sorulanlar",
+      "title": "Merak edilenler",
+      "items": [
+        {
+          "q": "Aynı gün teslimat yapıyor musunuz?",
+          "a": "Evet. Hafta içi 17:00, hafta sonu 15:00'a kadar verilen siparişler aynı gün teslim edilir. Şehir içi ortalama teslim süremiz 2 saattir."
+        },
+        {
+          "q": "Siparişi nasıl veriyorum?",
+          "a": "Beğendiğiniz ürünleri sepete ekleyin, ardından 'Siparişi WhatsApp'tan Tamamla' butonuna basın. Ürün kodları, adetleri ve notunuz otomatik olarak mesaja eklenir."
+        },
+        {
+          "q": "Çiçekler fotoğraftaki gibi mi geliyor?",
+          "a": "Tasarımlar el yapımı olduğu için birebir aynı olmayabilir; ancak aynı renk paleti, aynı boyut ve aynı kalite standardı garanti edilir."
+        },
+        {
+          "q": "Kart notu ekleyebilir miyim?",
+          "a": "Elbette. Sepet ekranındaki 'Sipariş Notu' alanına yazdığınız mesaj, ücretsiz el yazısı kartla birlikte iletilir."
+        },
+        {
+          "q": "Ödeme nasıl yapılıyor?",
+          "a": "WhatsApp üzerinden siparişiniz onaylandıktan sonra havale/EFT, kredi kartı linki veya kapıda ödeme seçeneklerinden birini kullanabilirsiniz."
+        },
+        {
+          "q": "Çiçek solarsa ne oluyor?",
+          "a": "Teslimattan sonraki 48 saat içinde tazelik sorunu yaşarsanız, fotoğrafla bize ulaşın; ürününüzü ücretsiz yenileriz."
+        }
+      ]
+    },
+    "contact": {
+      "enabled": true,
+      "eyebrow": "İletişim",
+      "title": "Atölyemize bekleriz",
+      "desc": "Özel tasarım talepleriniz için bize yazın; 15 dakika içinde dönüş yapıyoruz.",
+      "address": "Kültür Mah. Gül Sokak No:12/A, Merkez / Elazığ",
+      "phone": "+90 555 000 00 00",
+      "email": "merhaba@monarozaflowers.com",
+      "hours": [
+        {
+          "days": "Pazartesi - Cumartesi",
+          "time": "08:30 - 21:00"
+        },
+        {
+          "days": "Pazar",
+          "time": "10:00 - 19:00"
+        }
+      ],
+      "mapEmbed": "https://www.google.com/maps?q=Elaz%C4%B1%C4%9F%20merkez&output=embed"
+    },
+    "footer": {
+      "enabled": true,
+      "about": "Mona Roza Flowers — taze çiçek, el yapımı tasarım ve zamanında teslimat. Sevdiklerinize söylemek istediğiniz her şeyi çiçeklerle anlatıyoruz.",
+      "columns": [
+        {
+          "title": "Kurumsal",
+          "links": [
+            {
+              "label": "Hakkımızda",
+              "href": "#about"
+            },
+            {
+              "label": "Atölye",
+              "href": "#atelier"
+            },
+            {
+              "label": "Galeri",
+              "href": "#gallery"
+            },
+            {
+              "label": "SSS",
+              "href": "#faq"
+            }
+          ]
+        },
+        {
+          "title": "Koleksiyon",
+          "links": [
+            {
+              "label": "Buketler",
+              "href": "#products"
+            },
+            {
+              "label": "Kutuda Çiçek",
+              "href": "#products"
+            },
+            {
+              "label": "Orkideler",
+              "href": "#products"
+            },
+            {
+              "label": "Düğün & Nişan",
+              "href": "#products"
+            }
+          ]
+        }
+      ],
+      "social": [
+        {
+          "icon": "instagram",
+          "label": "Instagram",
+          "href": "https://instagram.com"
+        },
+        {
+          "icon": "facebook",
+          "label": "Facebook",
+          "href": "https://facebook.com"
+        },
+        {
+          "icon": "whatsapp",
+          "label": "WhatsApp",
+          "href": "#"
+        }
+      ],
+      "copyright": "Mona Roza Flowers. Tüm hakları saklıdır.",
+      "credit": "Tasarım & Yazılım: Ümitcan Çınar"
+    }
+  },
+  "catalog": {
+    "categories": [
+      {
+        "id": "buketler",
+        "name": "Buketler",
+        "order": 1
+      },
+      {
+        "id": "kutuda-cicek",
+        "name": "Kutuda Çiçek",
+        "order": 2
+      },
+      {
+        "id": "orkideler",
+        "name": "Orkideler",
+        "order": 3
+      },
+      {
+        "id": "saksi-teraryum",
+        "name": "Saksı & Teraryum",
+        "order": 4
+      },
+      {
+        "id": "dugun-nisan",
+        "name": "Düğün & Nişan",
+        "order": 5
+      },
+      {
+        "id": "ozel-tasarim",
+        "name": "Özel Tasarım",
+        "order": 6
+      }
+    ],
+    "products": [
+      {
+        "id": "MR-1001",
+        "name": "Kırmızı Gül Buketi (21 Adet)",
+        "category": "buketler",
+        "price": 1890,
+        "oldPrice": 2250,
+        "badge": "Çok Satan",
+        "featured": true,
+        "stock": true,
+        "desc": "21 adet ithal kırmızı gül, kraft kağıt sarım ve saten kurdele ile hazırlanır. Klasik bir aşk ifadesi.",
+        "tags": [
+          "gül",
+          "romantik",
+          "sevgililer"
+        ],
+        "image": "https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?auto=format&fit=crop&w=900&q=85",
+        "images": [
+          "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=900&q=85"
+        ]
+      },
+      {
+        "id": "MR-1002",
+        "name": "Pastel Şakayık Aranjmanı",
+        "category": "buketler",
+        "price": 2450,
+        "oldPrice": 0,
+        "badge": "Sezonluk",
+        "featured": true,
+        "stock": true,
+        "desc": "Mevsiminde toplanan pembe şakayıklar, okaliptüs ve krem güllerle harmanlanır.",
+        "tags": [
+          "şakayık",
+          "pastel"
+        ],
+        "image": "https://images.unsplash.com/photo-1591886960571-74d43a9d4166?auto=format&fit=crop&w=900&q=85",
+        "images": [
+          "https://images.unsplash.com/photo-1596438459194-f275f413d6ff?auto=format&fit=crop&w=900&q=85"
+        ]
+      },
+      {
+        "id": "MR-1003",
+        "name": "Beyaz Zarafet Buketi",
+        "category": "buketler",
+        "price": 1650,
+        "oldPrice": 0,
+        "badge": "",
+        "featured": false,
+        "stock": true,
+        "desc": "Beyaz lisianthus, gül ve papatya kombinasyonu. Sadelik arayanlar için ideal.",
+        "tags": [
+          "beyaz",
+          "sade"
+        ],
+        "image": "https://images.unsplash.com/photo-1462530260150-162092dbf011?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      },
+      {
+        "id": "MR-1004",
+        "name": "Vahşi Bahar Buketi",
+        "category": "buketler",
+        "price": 1290,
+        "oldPrice": 1490,
+        "badge": "İndirim",
+        "featured": false,
+        "stock": true,
+        "desc": "Kır çiçekleri, karanfil ve mevsim yeşillikleriyle doğal duran serbest form buket.",
+        "tags": [
+          "kır çiçeği",
+          "doğal"
+        ],
+        "image": "https://images.unsplash.com/photo-1533616688419-b7a585564566?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      },
+      {
+        "id": "MR-1005",
+        "name": "Lale Bahçesi",
+        "category": "buketler",
+        "price": 980,
+        "oldPrice": 0,
+        "badge": "",
+        "featured": false,
+        "stock": true,
+        "desc": "25 dal renkli lale, kraft sarım. Bahar aylarına özel üretim.",
+        "tags": [
+          "lale",
+          "renkli"
+        ],
+        "image": "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      },
+      {
+        "id": "MR-2001",
+        "name": "Siyah Kutuda Kırmızı Gül",
+        "category": "kutuda-cicek",
+        "price": 2190,
+        "oldPrice": 0,
+        "badge": "Premium",
+        "featured": true,
+        "stock": true,
+        "desc": "Silindir siyah kutu içinde sıkı dizilmiş 33 adet kırmızı gül. Su haznesi dâhildir.",
+        "tags": [
+          "kutu",
+          "gül",
+          "premium"
+        ],
+        "image": "https://images.unsplash.com/photo-1457089328109-e5d9bd499191?auto=format&fit=crop&w=900&q=85",
+        "images": [
+          "https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?auto=format&fit=crop&w=900&q=85"
+        ]
+      },
+      {
+        "id": "MR-2002",
+        "name": "Pudra Kutuda Karışık Çiçek",
+        "category": "kutuda-cicek",
+        "price": 1750,
+        "oldPrice": 1950,
+        "badge": "",
+        "featured": false,
+        "stock": true,
+        "desc": "Pudra tonlu kutuda gül, lisianthus ve mevsim çiçeklerinden oluşan yumuşak bir kompozisyon.",
+        "tags": [
+          "kutu",
+          "pastel"
+        ],
+        "image": "https://images.unsplash.com/photo-1596438459194-f275f413d6ff?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      },
+      {
+        "id": "MR-2003",
+        "name": "Mini Kutu Çiçek",
+        "category": "kutuda-cicek",
+        "price": 890,
+        "oldPrice": 0,
+        "badge": "Ekonomik",
+        "featured": false,
+        "stock": true,
+        "desc": "Ofis ve masa üstü için tasarlanmış kompakt kutu aranjman.",
+        "tags": [
+          "mini",
+          "ofis"
+        ],
+        "image": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      },
+      {
+        "id": "MR-3001",
+        "name": "Çift Dallı Beyaz Orkide",
+        "category": "orkideler",
+        "price": 1990,
+        "oldPrice": 0,
+        "badge": "Uzun Ömürlü",
+        "featured": true,
+        "stock": true,
+        "desc": "Seramik saksıda çift dallı phalaenopsis orkide. Bakım kartı hediyedir.",
+        "tags": [
+          "orkide",
+          "hediye"
+        ],
+        "image": "https://images.unsplash.com/photo-1462530260150-162092dbf011?auto=format&fit=crop&w=900&q=85",
+        "images": [
+          "https://images.unsplash.com/photo-1502977249166-824b3a8a4d6d?auto=format&fit=crop&w=900&q=85"
+        ]
+      },
+      {
+        "id": "MR-3002",
+        "name": "Mor Orkide Aranjmanı",
+        "category": "orkideler",
+        "price": 2290,
+        "oldPrice": 0,
+        "badge": "",
+        "featured": false,
+        "stock": true,
+        "desc": "Mor phalaenopsis orkide, yosun ve doğal ahşap detaylarla sunulur.",
+        "tags": [
+          "orkide",
+          "mor"
+        ],
+        "image": "https://images.unsplash.com/photo-1471696035578-3d8c78d99684?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      },
+      {
+        "id": "MR-4001",
+        "name": "Cam Fanusta Teraryum",
+        "category": "saksi-teraryum",
+        "price": 1150,
+        "oldPrice": 0,
+        "badge": "Yeni",
+        "featured": false,
+        "stock": true,
+        "desc": "Sukulent ve kaktüslerden oluşan, bakımı kolay cam fanus teraryum.",
+        "tags": [
+          "teraryum",
+          "sukulent"
+        ],
+        "image": "https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      },
+      {
+        "id": "MR-4002",
+        "name": "Saksıda Yeşil Bitki Seti",
+        "category": "saksi-teraryum",
+        "price": 1390,
+        "oldPrice": 1590,
+        "badge": "",
+        "featured": false,
+        "stock": true,
+        "desc": "Üçlü seramik saksı seti; sanseverya, pilea ve zamioculcas.",
+        "tags": [
+          "bitki",
+          "ev"
+        ],
+        "image": "https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      },
+      {
+        "id": "MR-5001",
+        "name": "Gelin Buketi — Krem Gül",
+        "category": "dugun-nisan",
+        "price": 3200,
+        "oldPrice": 0,
+        "badge": "Özel Üretim",
+        "featured": true,
+        "stock": true,
+        "desc": "Krem gül, beyaz şakayık ve okaliptüsten oluşan el buketi. Yaka çiçeği hediyedir.",
+        "tags": [
+          "gelin",
+          "düğün"
+        ],
+        "image": "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=900&q=85",
+        "images": [
+          "https://images.unsplash.com/photo-1591886960571-74d43a9d4166?auto=format&fit=crop&w=900&q=85"
+        ]
+      },
+      {
+        "id": "MR-5002",
+        "name": "Nişan Masası Aranjmanı",
+        "category": "dugun-nisan",
+        "price": 4500,
+        "oldPrice": 0,
+        "badge": "",
+        "featured": false,
+        "stock": true,
+        "desc": "Nişan masası için uzun form çiçek yolu tasarımı. Ölçüye göre fiyatlandırılır.",
+        "tags": [
+          "nişan",
+          "masa"
+        ],
+        "image": "https://images.unsplash.com/photo-1546842931-886c185b4c8c?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      },
+      {
+        "id": "MR-5003",
+        "name": "Kapı Süsü — Çiçek Çemberi",
+        "category": "dugun-nisan",
+        "price": 2750,
+        "oldPrice": 0,
+        "badge": "",
+        "featured": false,
+        "stock": true,
+        "desc": "Söz ve nişan için hazırlanan taze çiçekli kapı çemberi.",
+        "tags": [
+          "kapı",
+          "söz"
+        ],
+        "image": "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      },
+      {
+        "id": "MR-6001",
+        "name": "Doğum Günü Balonlu Set",
+        "category": "ozel-tasarim",
+        "price": 1690,
+        "oldPrice": 1890,
+        "badge": "Çok Satan",
+        "featured": true,
+        "stock": true,
+        "desc": "Renkli buket, folyo balon ve el yazısı not kartından oluşan kutlama seti.",
+        "tags": [
+          "doğum günü",
+          "balon"
+        ],
+        "image": "https://images.unsplash.com/photo-1508610048659-a06b669e3321?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      },
+      {
+        "id": "MR-6002",
+        "name": "Yeni Doğan Hoş Geldin Seti",
+        "category": "ozel-tasarim",
+        "price": 1450,
+        "oldPrice": 0,
+        "badge": "",
+        "featured": false,
+        "stock": true,
+        "desc": "Pastel tonlarda buket, yumuşak oyuncak ve tebrik kartı bir arada.",
+        "tags": [
+          "bebek",
+          "yeni doğan"
+        ],
+        "image": "https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      },
+      {
+        "id": "MR-6003",
+        "name": "Kurumsal Açılış Çelengi",
+        "category": "ozel-tasarim",
+        "price": 2950,
+        "oldPrice": 0,
+        "badge": "",
+        "featured": false,
+        "stock": true,
+        "desc": "Ferforje ayaklı, kurdele yazılı açılış çelengi. Aynı gün kurulum yapılır.",
+        "tags": [
+          "kurumsal",
+          "açılış"
+        ],
+        "image": "https://images.unsplash.com/photo-1470509037663-253afd7f0f51?auto=format&fit=crop&w=900&q=85",
+        "images": []
+      }
+    ]
+  },
+  "integrations": {
+    "whatsapp": {
+      "enabled": true,
+      "phone": "905550000000",
+      "floatingLabel": "WhatsApp'tan yaz",
+      "greeting": "Merhaba, Mona Roza Flowers web sitesinden yazıyorum.",
+      "orderTitle": "YENİ SİPARİŞ",
+      "footerNote": "Teslimat adresi ve tarihi için sizi bekliyorum."
+    },
+    "instagram": "https://instagram.com",
+    "phoneDisplay": "+90 555 000 00 00"
+  },
+  "mascot": {
+    "enabled": true,
+    "name": "Roza",
+    "messages": [
+      "Merhaba! Ben Roza 🌸 Sana yardımcı olayım mı?",
+      "Bugün taze şakayıklarımız geldi!",
+      "Sepetine bakayım mı? Aynı gün teslim edebiliriz.",
+      "Not kartı ücretsiz, unutma 💌",
+      "Aradığını bulamadıysan WhatsApp'tan yaz!"
+    ]
+  },
+  "admin": {
+    "storage": "local",
+    "apiBase": "",
+    "note": "storage: 'local' | 'rest'. REST seçilirse apiBase alanı doldurulmalıdır."
+  }
+}
