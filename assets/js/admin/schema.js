@@ -364,7 +364,8 @@ export const SCHEMA = [
       fields: [
         { path: 'sections.footer.about', label: 'Tanıtım metni', type: 'textarea' },
         { path: 'sections.footer.copyright', label: 'Telif metni', type: 'text' },
-        { path: 'sections.footer.credit', label: 'Kredi', type: 'text' }
+        { path: 'sections.footer.credit', label: 'Kredi metni', type: 'text' },
+        { path: 'sections.footer.creditUrl', label: 'Kredi bağlantısı', type: 'text', help: 'Kredi metni içindeki "Ümitcan Çınar" ismi bu adrese bağlanır.' }
       ]
     }],
     lists: [

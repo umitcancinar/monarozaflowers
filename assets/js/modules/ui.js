@@ -207,23 +207,3 @@ export function initContactForm(getContent) {
     toast('WhatsApp açılıyor', 'Mesajınız hazır, sadece gönder demeniz yeterli');
   });
 }
-
-/* ---------- BÜLTEN ---------- */
-export function initNewsletter(getContent) {
-  const form = qs('#news-form');
-  if (!form) return;
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const input = qs('#news-mail');
-    const mail = input.value.trim();
-    if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(mail)) {
-      toast('Geçerli bir e-posta girin', '', 'warn');
-      return;
-    }
-    const c = getContent();
-    const text = `Bülten aboneliği: ${mail}`;
-    window.open(waLink(get(c, 'integrations.whatsapp.phone', ''), text), '_blank', 'noopener');
-    input.value = '';
-    toast('Teşekkürler!', 'Kampanyalarımızdan haberdar olacaksınız');
-  });
-}

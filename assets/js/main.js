@@ -12,7 +12,7 @@ import {
 } from './modules/motion.js';
 import {
   initMobileMenu, initTheme, initScrollTop, initFaq, initTestimonials,
-  initLightbox, initAtelierVideo, initContactForm, initNewsletter
+  initLightbox, initAtelierVideo, initContactForm
 } from './modules/ui.js';
 import { initShop, refreshShop } from './modules/shop.js';
 import { initArc, refreshArc } from './modules/arc.js';
@@ -65,7 +65,6 @@ async function boot() {
   initLightbox(getContent);
   initAtelierVideo();
   initContactForm(getContent);
-  initNewsletter(getContent);
 
   // 4) Mağaza + özel bölümler
   initShop(content);

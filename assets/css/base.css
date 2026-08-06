@@ -278,7 +278,7 @@ html[data-theme="dark"] .site-footer{background:#0A0607}
   animation:bloomFloat 14s ease-in-out infinite alternate;
 }
 @keyframes bloomFloat{to{transform:translate(-60px,50px) scale(1.15)}}
-.footer-grid{position:relative;display:grid;grid-template-columns:1.4fr 1.6fr 1fr;gap:56px;padding-bottom:56px}
+.footer-grid{position:relative;display:grid;grid-template-columns:1.1fr 1fr;gap:56px;padding-bottom:56px}
 .f-brand p{color:rgba(243,230,228,.62);font-size:.92rem;margin:20px 0 22px;max-width:42ch}
 .site-footer .brand-text strong{color:#fff}
 .socials{display:flex;gap:10px}
@@ -289,17 +289,10 @@ html[data-theme="dark"] .site-footer{background:#0A0607}
 .socials a svg{width:18px;height:18px;fill:currentColor}
 .socials a:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-4px)}
 .f-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:32px}
-.f-cols h4,.f-news h4{font-family:var(--font-display);font-size:1.15rem;margin-bottom:18px;color:#fff;font-weight:600}
+.f-cols h4{font-family:var(--font-display);font-size:1.15rem;margin-bottom:18px;color:#fff;font-weight:600}
 .f-cols ul{display:grid;gap:11px}
 .f-cols a{color:rgba(243,230,228,.6);font-size:.9rem;transition:.3s;display:inline-block}
 .f-cols a:hover{color:var(--accent2);transform:translateX(5px)}
-.news-form{display:flex;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:99px;padding:5px 5px 5px 18px}
-.news-form input{flex:1;min-width:0;background:none;border:0;outline:none;color:#fff;font-size:.88rem}
-.news-form input::placeholder{color:rgba(243,230,228,.4)}
-.news-form button{width:40px;height:40px;border-radius:50%;background:var(--accent);display:grid;place-items:center;flex-shrink:0;transition:.3s}
-.news-form button svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.news-form button:hover{transform:scale(1.08) rotate(-8deg)}
-.news-note{font-size:.76rem;color:rgba(243,230,228,.4);margin-top:12px}
 .footer-bottom{
   position:relative;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   padding:24px 0 30px;border-top:1px solid rgba(255,255,255,.09);
@@ -323,7 +316,6 @@ html[data-theme="dark"] .site-footer{background:#0A0607}
 /* ---------- RESPONSIVE ---------- */
 @media (max-width:1024px){
   .footer-grid{grid-template-columns:1fr 1fr;gap:44px}
-  .f-news{grid-column:1/-1}
 }
 @media (max-width:900px){
   .shell{width:min(1280px,100% - 34px)}

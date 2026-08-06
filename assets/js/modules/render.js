@@ -313,6 +313,16 @@ function renderFooter(c) {
 
   const y = qs('#year');
   if (y) y.textContent = new Date().getFullYear();
+
+  // İmza: "Ümitcan Çınar" ismi varsa creditUrl'e bağlanır, kalan metin düz kalır
+  const creditEl = qs('#footer-credit');
+  if (creditEl) {
+    const creditText = esc(get(c, 'sections.footer.credit', ''));
+    const creditUrl = safeUrl(get(c, 'sections.footer.creditUrl', ''), '');
+    creditEl.innerHTML = creditUrl
+      ? creditText.replace(/Ümitcan\s+Ç[iı]nar/i, (m) => `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${m}</a>`)
+      : creditText;
+  }
 }
 
 /* ---------- WHATSAPP BAĞLANTILARI ---------- */
