@@ -7,21 +7,37 @@ import { qs, qsa, clamp, lerp, throttle } from '../core/utils.js';
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* ---------- PRELOADER ---------- */
-export function initPreloader() {
+/* ---------- PRELOADER ----------
+   Perde, içerik JSON'u gelip DOM'a basılana kadar açılmaz. Aksi hâlde
+   boş iskelet (başlıksız hero, ürünsüz ızgara) bir an ekranda kalır ve
+   içerik gelince her şey yerinden zıplar. hidePreloader() render bittiğinde
+   çağrılır; güvenlik ağı olarak en geç 6 sn sonra kendiliğinden açılır. */
+let preloaderDone = false;
+
+function revealPage() {
+  if (preloaderDone) return;
+  preloaderDone = true;
   const pre = qs('#preloader');
-  const done = () => {
-    pre?.classList.add('done');
-    document.body.classList.remove('is-loading');
-    qs('#hero')?.classList.add('ready');
-    setTimeout(() => pre?.remove(), 800);
-  };
-  const minWait = new Promise(r => setTimeout(r, reduced ? 200 : 900));
-  const loaded = document.readyState === 'complete'
-    ? Promise.resolve()
-    : new Promise(r => window.addEventListener('load', r, { once: true }));
-  // Yavaş bir görsel tüm sayfayı kilitlemesin
-  Promise.race([Promise.all([minWait, loaded]), new Promise(r => setTimeout(r, 4000))]).then(done);
+  pre?.classList.add('done');
+  document.body.classList.remove('is-loading');
+  qs('#hero')?.classList.add('ready');
+  setTimeout(() => pre?.remove(), 800);
+}
+
+export function initPreloader() {
+  // Sunucu/ağ takılırsa kullanıcı sonsuza kadar perdede kalmasın
+  setTimeout(revealPage, 6000);
+}
+
+/** İçerik ekrana basıldıktan sonra perdeyi kaldırır (minimum gösterim süresiyle). */
+export function hidePreloader() {
+  if (preloaderDone) return;
+  const minWait = reduced ? 0 : 450;
+  const fontsReady = document.fonts?.ready || Promise.resolve();
+  Promise.race([
+    Promise.all([new Promise(r => setTimeout(r, minWait)), fontsReady]),
+    new Promise(r => setTimeout(r, 2500))   // yazı tipleri gecikirse bekletme
+  ]).then(revealPage);
 }
 
 /* ---------- SCROLL REVEAL ---------- */

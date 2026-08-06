@@ -7,7 +7,7 @@ import { qs, qsa, toast } from './core/utils.js';
 import { store } from './core/store.js';
 import { renderAll } from './modules/render.js';
 import {
-  initPreloader, initReveal, observeReveal, initHeader, initAnchors,
+  initPreloader, hidePreloader, initReveal, observeReveal, initHeader, initAnchors,
   initMagnetic, initParallax, initCounters, initPetals
 } from './modules/motion.js';
 import {
@@ -43,8 +43,9 @@ async function boot() {
 
   const content = getContent();
 
-  // 1) İçerikten DOM
+  // 1) İçerikten DOM — perde ancak bu bittikten sonra kalkar
   renderAll(content);
+  hidePreloader();
 
   // 2) Hareket katmanı
   initReveal();

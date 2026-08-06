@@ -71,12 +71,20 @@ app.get('/api/health', async (_req, res) => {
 });
 
 /* ---------- İçerik ---------- */
+/* İçerik her ziyaretçide değişmediği için bellekte tutulur; veritabanına
+   yalnızca önbellek boşken ya da yönetim panelinden kayıt sonrası gidilir.
+   Uzak veritabanına gidiş gelişi kaldırdığı için açılış belirgin hızlanır. */
+let contentCache = null;
+
 app.get('/api/content', async (_req, res) => {
   try {
-    const { rows } = await q(`SELECT data, updated_at FROM ${table('content')} WHERE id = 'site'`);
-    if (!rows.length) return res.status(404).json({ error: 'İçerik bulunamadı' });
+    if (!contentCache) {
+      const { rows } = await q(`SELECT data FROM ${table('content')} WHERE id = 'site'`);
+      if (!rows.length) return res.status(404).json({ error: 'İçerik bulunamadı' });
+      contentCache = rows[0].data;
+    }
     res.set('Cache-Control', 'no-store');
-    res.json(rows[0].data);
+    res.json(contentCache);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -95,6 +103,7 @@ app.put('/api/content', auth, async (req, res) => {
        ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, updated_at = now(), updated_by = EXCLUDED.updated_by`,
       [data, req.user?.email || 'admin']
     );
+    contentCache = data;   // önbelleği tazele; sonraki ziyaretçiler yeni içeriği görür
     res.json({ ok: true, updatedAt: data.meta.updatedAt });
   } catch (err) {
     res.status(500).json({ error: err.message });

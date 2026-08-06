@@ -69,33 +69,24 @@ export function writeConfig(cfg) {
   localStorage.setItem(LS_CONFIG, JSON.stringify(cfg));
 }
 
-/** Aynı origin'de bir API var mı diye hızlıca (kısa timeout'la) kontrol eder. */
-async function probeSameOriginApi(timeoutMs = 2500) {
+/**
+ * Aynı origin'deki API'den içeriği tek istekte dener.
+ * Ayrı bir /health yoklaması yapılmaz; içerik zaten gelirse API var demektir.
+ * Böylece açılışta üç sıralı istek yerine tek istek yeter.
+ */
+async function tryAutoApi(timeoutMs = 4000) {
   const base = `${location.origin}/api`;
   try {
     const ctrl = new AbortController();
     const t = setTimeout(() => ctrl.abort(), timeoutMs);
-    const res = await fetch(`${base}/health`, { signal: ctrl.signal, cache: 'no-store' });
+    const res = await fetch(`${base}/content`, {
+      signal: ctrl.signal, cache: 'no-store', headers: { Accept: 'application/json' }
+    });
     clearTimeout(t);
     if (!res.ok) return null;
-    const body = await res.json().catch(() => null);
-    return body?.ok ? base : null;
+    const data = await res.json();
+    return (data && typeof data === 'object') ? { base, data } : null;
   } catch { return null; }
-}
-
-/**
- * Aktif adapter'ı belirler.
- * - Kullanıcı Sistem sekmesinden açıkça bir mod seçtiyse (cfg.storage dolu) ona uyulur.
- * - Aksi hâlde (varsayılan, hiçbir cihazda elle ayar gerekmez) aynı origin'de
- *   API var mı diye bakılır; varsa otomatik REST, yoksa local kullanılır.
- */
-async function resolveAdapter() {
-  const cfg = readConfig();
-  if (cfg.storage === 'local') return LocalAdapter;
-  if (cfg.storage === 'rest' && cfg.apiBase) return RestAdapter(String(cfg.apiBase).replace(/\/$/, ''));
-
-  const auto = await probeSameOriginApi();
-  return auto ? RestAdapter(auto) : LocalAdapter;
 }
 
 /* ---------------- Store ---------------- */
@@ -121,16 +112,36 @@ class ContentStore {
   }
 
   async init() {
-    const res = await fetch(SEED_URL, { cache: 'no-cache' });
-    if (!res.ok) throw new Error('data/content.json yüklenemedi (' + res.status + ')');
-    this.seed = await res.json();
+    const cfg = readConfig();
+    const forcedLocal = cfg.storage === 'local';
+    const forcedRest  = cfg.storage === 'rest' && cfg.apiBase;
 
-    this.adapter = await resolveAdapter();
+    // Fabrika içeriği ile sunucu içeriği AYNI ANDA istenir; açılış tek tur sürer.
+    const seedReq = fetch(SEED_URL, { cache: 'no-cache' }).then(r => {
+      if (!r.ok) throw new Error('data/content.json yüklenemedi (' + r.status + ')');
+      return r.json();
+    });
+    const remoteReq = forcedLocal
+      ? Promise.resolve(null)
+      : forcedRest
+        ? RestAdapter(String(cfg.apiBase).replace(/\/$/, '')).read()
+            .then(data => ({ base: String(cfg.apiBase).replace(/\/$/, ''), data }))
+            .catch(() => null)
+        : tryAutoApi();
 
-    let stored = null;
-    try { stored = await this.adapter.read(); } catch (err) { console.warn('[store] adapter okunamadı:', err.message); }
+    const [seed, remote] = await Promise.all([seedReq, remoteReq]);
+    this.seed = seed;
 
-    this.overrides = stored || {};
+    if (remote) {
+      this.adapter = RestAdapter(remote.base);
+      this.overrides = remote.data || {};
+    } else {
+      this.adapter = LocalAdapter;
+      let stored = null;
+      try { stored = await this.adapter.read(); } catch (err) { console.warn('[store] adapter okunamadı:', err.message); }
+      this.overrides = stored || {};
+    }
+
     this.data = deepMerge(clone(this.seed), this.overrides);
     return this.data;
   }
