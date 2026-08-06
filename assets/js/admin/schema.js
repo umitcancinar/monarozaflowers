@@ -99,7 +99,7 @@ export const SCHEMA = [
       title: 'Görsel / Video',
       fields: [
         { path: 'sections.hero.media.src', label: 'Arka plan görseli', type: 'image' },
-        { path: 'sections.hero.media.video', label: 'Arka plan videosu (mp4 URL)', type: 'text', help: 'Doldurulursa görselin yerine oynatılır.' }
+        { path: 'sections.hero.media.video', label: '🏠 Anasayfa arka plan videosu (mp4 URL)', type: 'text', help: 'Bu, sayfanın en üstündeki büyük görselin YERİNE oynar. Atölye videosuyla karıştırmayın — o ayrı bir alandır (Atölye/Video sekmesi).' }
       ]
     }],
     lists: [
@@ -239,7 +239,7 @@ export const SCHEMA = [
         { path: 'sections.atelier.title', label: 'Başlık', type: 'text' },
         { path: 'sections.atelier.desc', label: 'Açıklama', type: 'textarea' },
         { path: 'sections.atelier.media.poster', label: 'Kapak görseli', type: 'image' },
-        { path: 'sections.atelier.media.video', label: 'Video URL (mp4)', type: 'text' }
+        { path: 'sections.atelier.media.video', label: '🎬 Atölye videosu (mp4 URL)', type: 'text', help: 'Bu, "Atölyemizi İzle" oynat düğmesine basınca açılan videodur. Anasayfa arka plan videosuyla karıştırmayın — o ayrı bir alandır (Karşılama/Hero sekmesi).' }
       ]
     }],
     lists: [{
