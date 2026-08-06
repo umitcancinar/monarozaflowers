@@ -244,27 +244,33 @@ app.use((req, res) => {
   res.status(404).sendFile(path.join(ROOT, '404.html'));
 });
 
-/* ---------- Başlat ---------- */
-async function start() {
-  await initSchema();
-
-  // İlk yönetici hesabı
-  const { rows } = await q(`SELECT id FROM ${table('admins')} WHERE email = $1`, [ADMIN_EMAIL]);
-  if (!rows.length) {
-    await q(`INSERT INTO ${table('admins')} (email, pass_hash, name) VALUES ($1, $2, $3)`,
-      [ADMIN_EMAIL, await bcrypt.hash(ADMIN_PASSWORD, 12), 'Mona Roza Yönetici']);
-    console.log(`✓ Yönetici oluşturuldu: ${ADMIN_EMAIL}`);
+/* ---------- Veritabanı hazırlığı (arka planda, denemeli) ----------
+   Neon gibi serverless veritabanları boşta kalınca uyur; ilk bağlantı
+   birkaç saniye sürebilir. Bu yüzden HTTP sunucusu veritabanını
+   BEKLEMEDEN açılır (Render'ın health check'i hemen geçer); şema/admin
+   kurulumu arka planda, bağlanana kadar tekrar denenerek yapılır. */
+async function prepareDatabase(attempt = 1) {
+  try {
+    await initSchema();
+    const { rows } = await q(`SELECT id FROM ${table('admins')} WHERE email = $1`, [ADMIN_EMAIL]);
+    if (!rows.length) {
+      await q(`INSERT INTO ${table('admins')} (email, pass_hash, name) VALUES ($1, $2, $3)`,
+        [ADMIN_EMAIL, await bcrypt.hash(ADMIN_PASSWORD, 12), 'Mona Roza Yönetici']);
+      console.log(`✓ Yönetici oluşturuldu: ${ADMIN_EMAIL}`);
+    }
+    console.log('✓ Veritabanı hazır.');
+  } catch (err) {
+    const wait = Math.min(30_000, attempt * 5000);
+    console.warn(`⚠ Veritabanı hazırlanamadı (deneme ${attempt}): ${err.message} — ${wait / 1000}sn sonra tekrar denenecek.`);
+    setTimeout(() => prepareDatabase(attempt + 1), wait);
   }
-
-  app.listen(PORT, () => {
-    console.log(`\n🌸 Mona Roza Flowers`);
-    console.log(`   Site  : http://localhost:${PORT}/`);
-    console.log(`   Panel : http://localhost:${PORT}/admin.html`);
-    console.log(`   API   : http://localhost:${PORT}/api/health\n`);
-  });
 }
 
-start().catch(err => {
-  console.error('✖ Sunucu başlatılamadı:', err);
-  process.exit(1);
+/* ---------- Başlat ---------- */
+app.listen(PORT, () => {
+  console.log(`\n🌸 Mona Roza Flowers`);
+  console.log(`   Site  : http://localhost:${PORT}/`);
+  console.log(`   Panel : http://localhost:${PORT}/admin.html`);
+  console.log(`   API   : http://localhost:${PORT}/api/health\n`);
+  prepareDatabase();
 });

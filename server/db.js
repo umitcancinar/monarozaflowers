@@ -22,8 +22,12 @@ export const pool = new pg.Pool({
   ssl: { rejectUnauthorized: false },
   max: 5,
   idleTimeoutMillis: 30_000,
-  connectionTimeoutMillis: 12_000
+  // Neon (serverless Postgres) uzun süre boşta kalınca uykuya geçer; ilk
+  // bağlantı "uyandırma" isteği birkaç saniye sürebilir. Kısa bir timeout
+  // bu durumda sunucunun hiç açılmadan çökmesine yol açar.
+  connectionTimeoutMillis: 25_000
 });
+pool.on('error', (err) => console.error('[db] havuz hatası (yakalandı, süreç düşmez):', err.message));
 
 export const q = (text, params) => pool.query(text, params);
 export const table = (name) => `"${SCHEMA}"."${name}"`;
