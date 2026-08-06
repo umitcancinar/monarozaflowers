@@ -5,8 +5,16 @@
    Adapter            = yayındaki içerik kaynağı
      · local : tarayıcı (localStorage) — sunucu gerekmez
      · rest  : { apiBase }/content GET/PUT — çok kullanıcılı
+
+   Mod seçimi OTOMATİKTİR: aynı origin'de bir API (/api/health) varsa
+   HER ziyaretçi/cihaz otomatik REST moduna geçer — kimsenin admin
+   panelinden manuel ayar yapmasına gerek yoktur. Kullanıcı isterse
+   Sistem sekmesinden 'local' zorlayarak bu otomatik algılamayı
+   geçersiz kılabilir (yalnızca o cihazda, test amaçlı).
+
    Admin panelindeki her değişiklik, açık olan site sekmelerine
-   BroadcastChannel + storage event ile anında yansır.
+   BroadcastChannel + storage event (aynı cihaz) ve periyodik
+   REST polling (farklı cihazlar) ile yansır.
    ========================================================= */
 
 import { deepMerge, clone, get } from './utils.js';
@@ -32,6 +40,7 @@ const LocalAdapter = {
 
 const RestAdapter = (apiBase) => ({
   id: 'rest',
+  apiBase,
   async read() {
     const res = await fetch(`${apiBase}/content`, { headers: { Accept: 'application/json' }, cache: 'no-store' });
     if (!res.ok) throw new Error('İçerik okunamadı: ' + res.status);
@@ -59,10 +68,34 @@ function readConfig() {
 export function writeConfig(cfg) {
   localStorage.setItem(LS_CONFIG, JSON.stringify(cfg));
 }
-function makeAdapter() {
+
+/** Aynı origin'de bir API var mı diye hızlıca (kısa timeout'la) kontrol eder. */
+async function probeSameOriginApi(timeoutMs = 2500) {
+  const base = `${location.origin}/api`;
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), timeoutMs);
+    const res = await fetch(`${base}/health`, { signal: ctrl.signal, cache: 'no-store' });
+    clearTimeout(t);
+    if (!res.ok) return null;
+    const body = await res.json().catch(() => null);
+    return body?.ok ? base : null;
+  } catch { return null; }
+}
+
+/**
+ * Aktif adapter'ı belirler.
+ * - Kullanıcı Sistem sekmesinden açıkça bir mod seçtiyse (cfg.storage dolu) ona uyulur.
+ * - Aksi hâlde (varsayılan, hiçbir cihazda elle ayar gerekmez) aynı origin'de
+ *   API var mı diye bakılır; varsa otomatik REST, yoksa local kullanılır.
+ */
+async function resolveAdapter() {
   const cfg = readConfig();
+  if (cfg.storage === 'local') return LocalAdapter;
   if (cfg.storage === 'rest' && cfg.apiBase) return RestAdapter(String(cfg.apiBase).replace(/\/$/, ''));
-  return LocalAdapter;
+
+  const auto = await probeSameOriginApi();
+  return auto ? RestAdapter(auto) : LocalAdapter;
 }
 
 /* ---------------- Store ---------------- */
@@ -72,7 +105,7 @@ class ContentStore {
     this.data = null;       // yayındaki birleşik içerik
     this.overrides = null;  // seed üzerine yazılan farklar
     this.listeners = new Set();
-    this.adapter = makeAdapter();
+    this.adapter = LocalAdapter; // init() tamamlanana kadar geçici; gerçek adapter init()'te çözülür
     this.channel = ('BroadcastChannel' in window) ? new BroadcastChannel(CHANNEL) : null;
 
     if (this.channel) {
@@ -91,6 +124,8 @@ class ContentStore {
     const res = await fetch(SEED_URL, { cache: 'no-cache' });
     if (!res.ok) throw new Error('data/content.json yüklenemedi (' + res.status + ')');
     this.seed = await res.json();
+
+    this.adapter = await resolveAdapter();
 
     let stored = null;
     try { stored = await this.adapter.read(); } catch (err) { console.warn('[store] adapter okunamadı:', err.message); }
@@ -151,8 +186,13 @@ class ContentStore {
 
   subscribe(fn) { this.listeners.add(fn); return () => this.listeners.delete(fn); }
 
+  /** Kullanıcının Sistem sekmesinde AÇIKÇA seçtiği ayar (ham). */
   get config() { return readConfig(); }
-  setConfig(cfg) { writeConfig(cfg); this.adapter = makeAdapter(); }
+  /** init() sonrası ÇÖZÜMLENMİŞ gerçek durum — otomatik algılamayı da kapsar. */
+  get resolvedApiBase() { return this.adapter?.apiBase || this.config.apiBase || ''; }
+  get isRest() { return this.adapter?.id === 'rest'; }
+
+  setConfig(cfg) { writeConfig(cfg); }
 }
 
 export const store = new ContentStore();

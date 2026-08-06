@@ -29,7 +29,12 @@ main{position:relative;z-index:2}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 }
 .hero-shell{position:relative;z-index:2}
-.hero-copy{max-width:760px;color:#fff}
+.hero-copy{
+  max-width:760px;color:#fff;
+  /* "Kaydır" ipucu + alttaki kavisli eğri her zaman içerikten ayrı dursun diye
+     kalıcı bir alt boşluk ayrılır; kısa/geniş ekranlarda üst üste binmeyi engeller. */
+  padding-bottom:clamp(130px,16vh,190px);
+}
 .hero-copy .eyebrow{color:var(--accent2)}
 .hero-title{
   font-family:var(--font-display);font-weight:600;

@@ -50,12 +50,12 @@ async function initAuth() {
   const hint = qs('#gate-hint');
   const desc = qs('#gate-desc');
 
-  const cfg = store.config;
-  const isRest = cfg.storage === 'rest' && cfg.apiBase;
+  const isRest = store.isRest;
+  const apiBase = store.resolvedApiBase;
 
   if (isRest) {
     emailInput.hidden = false;
-    emailInput.value = cfg.lastEmail || '';
+    emailInput.value = store.config.lastEmail || '';
     desc.textContent = 'Yönetici e-posta ve şifrenizle giriş yapın.';
     hint.innerHTML = 'Sunucu tarafında tanımlı bir hesap gereklidir.';
     if (sessionStorage.getItem('mrf_admin_ok') === '1' && localStorage.getItem(LS_TOKEN)) {
@@ -81,14 +81,16 @@ async function initAuth() {
 
       if (isRest) {
         try {
-          const res = await fetch(`${String(cfg.apiBase).replace(/\/$/, '')}/auth/login`, {
+          const res = await fetch(`${apiBase}/auth/login`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: emailInput.value.trim(), password: val })
           });
           const body = await res.json().catch(() => ({}));
           if (!res.ok) { fail(body.error || 'Giriş başarısız.'); input.value = ''; btn.disabled = false; return; }
           localStorage.setItem(LS_TOKEN, body.token);
-          store.setConfig({ ...cfg, lastEmail: emailInput.value.trim() });
+          // Bu cihazda REST modunu ve e-postayı kalıcı yapar — bir sonraki
+          // açılışta otomatik algılama zaten aynı sonuca varır, bu sadece garantiye alır.
+          store.setConfig({ storage: 'rest', apiBase, lastEmail: emailInput.value.trim() });
           sessionStorage.setItem('mrf_admin_ok', '1');
           gate.classList.add('done');
           setTimeout(() => gate.remove(), 500);
@@ -322,9 +324,9 @@ function productsPanelHtml() {
 }
 
 /** REST modunda sunucu bağlantısı hazırsa oradan, değilse tarayıcıdan sipariş listesi döner. */
-function isRestMode() { const c = store.config; return c.storage === 'rest' && !!c.apiBase; }
+function isRestMode() { return store.isRest; }
 
-function apiUrl(path) { return `${String(store.config.apiBase).replace(/\/$/, '')}${path}`; }
+function apiUrl(path) { return `${store.resolvedApiBase}${path}`; }
 function authHeaders() {
   const token = localStorage.getItem(LS_TOKEN);
   return token ? { Authorization: `Bearer ${token}` } : {};
@@ -388,24 +390,31 @@ function ordersPanelHtml() {
 
 function systemPanelHtml() {
   const cfg = store.config;
+  const resolvedRest = store.isRest;
+  const auto = !cfg.storage; // kullanıcı elle bir şey seçmediyse otomatik algılama devrede
   return `
   <section class="card">
     <h3 class="card-title">İçerik Kaynağı</h3>
     <div class="card-body">
+      ${auto ? `<p class="hint" style="margin:0 0 4px">
+        ${resolvedRest
+          ? '✓ Bu cihaz aynı adresteki sunucuyu otomatik buldu ve <b>REST modunda</b> çalışıyor. Hiçbir cihazda elle ayar yapmanıza gerek yok — bu ekran sadece istisnai durumlar (test, geçici zorlama) içindir.'
+          : 'Bu cihaz bir sunucu bulamadığı için <b>local modda</b> çalışıyor (değişiklikler sadece bu tarayıcıda kalır).'}
+      </p>` : ''}
       <div class="field-row">
         <label class="fl">Depolama modu</label>
         <select id="cfg-storage">
-          <option value="local" ${cfg.storage !== 'rest' ? 'selected' : ''}>Tarayıcı (local) — sunucu gerekmez</option>
-          <option value="rest" ${cfg.storage === 'rest' ? 'selected' : ''}>REST API — çok kullanıcılı / canlı</option>
+          <option value="local" ${!resolvedRest ? 'selected' : ''}>Tarayıcı (local) — sunucu gerekmez</option>
+          <option value="rest" ${resolvedRest ? 'selected' : ''}>REST API — çok kullanıcılı / canlı</option>
         </select>
-        <small class="hint">Local modda değişiklikler yalnızca bu tarayıcıda görünür. Yayına almak için aşağıdan <b>content.json</b> indirip depoya koyun ya da REST moduna geçin.</small>
+        <small class="hint">Bu seçim yalnızca BU CİHAZI etkiler. Diğer ziyaretçiler her zaman otomatik algılama kullanır.</small>
       </div>
       <div class="field-row">
         <label class="fl">API adresi</label>
-        <input type="text" id="cfg-api" value="${esc(cfg.apiBase || '')}" placeholder="https://api.monarozaflowers.com">
+        <input type="text" id="cfg-api" value="${esc(store.resolvedApiBase)}" placeholder="https://siteniz.com/api">
         <small class="hint">Sunucu <code>GET /content</code> ve <code>PUT /content</code> uçlarını sunmalıdır.</small>
       </div>
-      <button class="btn primary" id="cfg-save">Bağlantıyı Kaydet</button>
+      <button class="btn primary" id="cfg-save">Bu Cihaz İçin Zorla Kaydet</button>
     </div>
   </section>
 
