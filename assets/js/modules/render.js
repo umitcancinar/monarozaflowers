@@ -186,7 +186,10 @@ function renderAtelier(c) {
     <li class="step"><b>${esc(s.no)}</b><h4>${esc(s.title)}</h4><p>${esc(s.text)}</p></li>`).join('');
 
   const vid = qs('#atelier-video');
-  const src = safeUrl(get(c, 'sections.atelier.media.video', ''), '');
+  // Atölye videosu boşsa anasayfa videosuna düşülür: tek video yüklendiğinde
+  // "video eklenmedi" uyarısıyla karşılaşılmaz.
+  const src = safeUrl(get(c, 'sections.atelier.media.video', ''), '')
+    || safeUrl(get(c, 'sections.hero.media.video', ''), '');
   const orb = qs('#play-orb');
   if (vid) {
     if (src) { vid.src = src; orb?.removeAttribute('hidden'); }
@@ -273,12 +276,54 @@ function renderContact(c) {
   }
 
   const map = qs('#map-frame');
-  const embed = safeUrl(ct.mapEmbed || '', '');
+  const embed = buildMapEmbed(ct.mapEmbed, ct.address);
   if (map) {
     map.innerHTML = embed
       ? `<iframe src="${esc(embed)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Harita" allowfullscreen></iframe>`
       : '';
   }
+}
+
+/**
+ * Google Haritalar bağlantısını gömülebilir adrese çevirir.
+ * Yalnızca "embed" biçimindeki adresler iframe içinde açılabildiği için,
+ * panele yapıştırılan normal paylaşım/arama bağlantıları da desteklenir.
+ * Bağlantı kullanılamıyorsa (kısaltılmış ya da hatalı) işletme adresine
+ * göre harita gösterilir; böylece harita alanı hiçbir durumda boş kalmaz.
+ */
+export function buildMapEmbed(rawUrl, address) {
+  const fromAddress = () => {
+    const query = String(address || '').trim();
+    return query ? `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed` : '';
+  };
+
+  const value = String(rawUrl || '').trim();
+  if (!value) return fromAddress();
+
+  let url;
+  try { url = new URL(value); } catch { return fromAddress(); }
+  if (!/^https?:$/.test(url.protocol)) return fromAddress();
+
+  const host = url.hostname.toLowerCase();
+  const isGoogleMaps = /(^|\.)google\.[a-z.]+$/.test(host) || host === 'maps.app.goo.gl' || host === 'goo.gl';
+  if (!isGoogleMaps) return fromAddress();
+
+  // Zaten gömülebilir biçimdeyse olduğu gibi kullanılır
+  if (url.pathname.includes('/maps/embed') || url.searchParams.get('output') === 'embed') return value;
+
+  // Kısaltılmış bağlantılar tarayıcıda çözülemez; adrese düşülür
+  if (host === 'maps.app.goo.gl' || host === 'goo.gl') return fromAddress();
+
+  // Koordinat (@enlem,boylam) veya arama/yer adı bilgisini çıkar
+  const coords = value.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+  if (coords) return `https://www.google.com/maps?q=${coords[1]},${coords[2]}&output=embed`;
+
+  const query = url.searchParams.get('q')
+    || url.searchParams.get('query')
+    || decodeURIComponent((url.pathname.match(/\/place\/([^/@]+)/) || [])[1] || '').replace(/\+/g, ' ');
+  if (query) return `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+
+  return fromAddress();
 }
 
 /** Basit açık/kapalı rozeti — ilk satırdaki saat aralığına bakar. */

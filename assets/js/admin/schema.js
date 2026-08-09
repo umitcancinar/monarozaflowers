@@ -345,7 +345,7 @@ export const SCHEMA = [
         { path: 'sections.contact.address', label: 'Adres', type: 'textarea' },
         { path: 'sections.contact.phone', label: 'Telefon', type: 'text' },
         { path: 'sections.contact.email', label: 'E-posta', type: 'text' },
-        { path: 'sections.contact.mapEmbed', label: 'Google Harita embed URL', type: 'text' }
+        { path: 'sections.contact.mapEmbed', label: 'Google Harita bağlantısı', type: 'text', help: 'Google Haritalar\'da işletmeyi açıp adres çubuğundaki bağlantıyı yapıştırmanız yeterli. Boş bırakırsanız ya da bağlantı okunamazsa yukarıdaki adrese göre harita gösterilir.' }
       ]
     }],
     lists: [{

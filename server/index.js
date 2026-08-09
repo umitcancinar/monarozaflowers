@@ -9,6 +9,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { randomBytes } from 'node:crypto';
 import { q, table, initSchema } from './db.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -16,7 +17,11 @@ const ROOT = path.join(__dirname, '..');
 const PORT = process.env.PORT || 5173;
 const JWT_SECRET = process.env.JWT_SECRET || 'degistirin-lutfen-' + Math.random().toString(36);
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'admin@monarozaflowers.com').toLowerCase();
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'monaroza2026';
+// Koda sabit şifre yazılmaz: ortam değişkeni yoksa ilk yönetici için rastgele
+// bir şifre üretilir ve yalnızca bir kez günlüğe yazılır. Böylece depoyu okuyan
+// birinin varsayılan şifreyi bilmesi mümkün olmaz.
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || randomBytes(12).toString('base64url');
+const ADMIN_PASSWORD_GENERATED = !process.env.ADMIN_PASSWORD;
 
 const app = express();
 app.set('trust proxy', 1);
@@ -71,17 +76,22 @@ app.get('/api/health', async (_req, res) => {
 });
 
 /* ---------- İçerik ---------- */
-/* İçerik her ziyaretçide değişmediği için bellekte tutulur; veritabanına
-   yalnızca önbellek boşken ya da yönetim panelinden kayıt sonrası gidilir.
-   Uzak veritabanına gidiş gelişi kaldırdığı için açılış belirgin hızlanır. */
+/* İçerik her ziyaretçide değişmediği için bellekte tutulur; uzak veritabanına
+   gidiş gelişi kaldırdığı için açılış belirgin hızlanır.
+   Önbellek panelden kayıt sonrası anında, bunun dışında en geç TTL kadar
+   sonra tazelenir. TTL olmadan, veritabanına panel dışından (bakım betiği,
+   ikinci bir sunucu kopyası) yazılan değişiklikler hiç görünmüyordu. */
+const CONTENT_CACHE_TTL_MS = 60_000;
 let contentCache = null;
+let contentCachedAt = 0;
 
 app.get('/api/content', async (_req, res) => {
   try {
-    if (!contentCache) {
+    if (!contentCache || Date.now() - contentCachedAt > CONTENT_CACHE_TTL_MS) {
       const { rows } = await q(`SELECT data FROM ${table('content')} WHERE id = 'site'`);
       if (!rows.length) return res.status(404).json({ error: 'İçerik bulunamadı' });
       contentCache = rows[0].data;
+      contentCachedAt = Date.now();
     }
     res.set('Cache-Control', 'no-store');
     res.json(contentCache);
@@ -103,7 +113,7 @@ app.put('/api/content', auth, async (req, res) => {
        ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, updated_at = now(), updated_by = EXCLUDED.updated_by`,
       [data, req.user?.email || 'admin']
     );
-    contentCache = data;   // önbelleği tazele; sonraki ziyaretçiler yeni içeriği görür
+    contentCache = data; contentCachedAt = Date.now();   // önbelleği tazele; sonraki ziyaretçiler yeni içeriği görür
     res.json({ ok: true, updatedAt: data.meta.updatedAt });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -257,6 +267,10 @@ async function prepareDatabase(attempt = 1) {
       await q(`INSERT INTO ${table('admins')} (email, pass_hash, name) VALUES ($1, $2, $3)`,
         [ADMIN_EMAIL, await bcrypt.hash(ADMIN_PASSWORD, 12), 'Mona Roza Yönetici']);
       console.log(`✓ Yönetici oluşturuldu: ${ADMIN_EMAIL}`);
+      if (ADMIN_PASSWORD_GENERATED) {
+        console.log(`⚠ ADMIN_PASSWORD tanımlı değildi; tek seferlik şifre: ${ADMIN_PASSWORD}`);
+        console.log('  Panele girip Sistem > Panel Şifresi bölümünden hemen değiştirin.');
+      }
     }
     console.log('✓ Veritabanı hazır.');
   } catch (err) {
