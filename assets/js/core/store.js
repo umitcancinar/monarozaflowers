@@ -151,7 +151,7 @@ class ContentStore {
    * periyodik olarak içeriği tazeler. Local modda hiçbir şey yapmaz
    * (zaten BroadcastChannel + storage event yeterli).
    */
-  startPolling(intervalMs = 15000) {
+  startPolling(intervalMs = 15 * 60 * 1000) {
     this.stopPolling();
     if (this.adapter.id !== 'rest') return;
     this._pollTimer = setInterval(async () => {
@@ -182,7 +182,11 @@ class ContentStore {
   async save(fullContent) {
     const payload = clone(fullContent);
     payload.meta = { ...(payload.meta || {}), updatedAt: new Date().toISOString() };
-    this._apply(payload, true);
+    // Sunucu yazımını gerçekten bekle; başarısız bir PUT sonrası panelin yanlışlıkla
+    // "Yayınlandı" demesini engeller. Yazım tamamlanınca sekmelere haber verilir.
+    await this.adapter.write(payload);
+    this._apply(payload, false);
+    this.channel?.postMessage({ type: 'content', payload });
     return true;
   }
 

@@ -96,8 +96,10 @@ async function boot() {
     qsa('.reveal, .blur-reveal, .stagger').forEach(n => n.classList.add('in'));
   });
 
-  // REST modundaysa diğer cihaz/adminlerden gelen değişiklikleri de yakala
-  store.startPolling(15000);
+  // REST modundaysa diğer cihaz/adminlerden gelen değişiklikleri seyrekçe yakala.
+  // Aynı tarayıcıdaki admin değişiklikleri BroadcastChannel ile zaten anında gelir;
+  // farklı cihazlar ise sayfa yenilendiğinde veya en geç 15 dakika içinde güncellenir.
+  store.startPolling(15 * 60 * 1000);
 
   // hero animasyonunu preloader kapanmadan önce hazırla
   setTimeout(() => qs('#hero')?.classList.add('ready'), 200);

@@ -66,6 +66,14 @@ function auth(req, res, next) {
 }
 
 /* ---------- Sağlık ---------- */
+// Harici uptime servisleri için yalnızca Node sürecini kontrol eden ucuz uç.
+// Veritabanını uyandırmaz; Render ve Neon trafiğini minimumda tutar.
+app.get('/healthz', (_req, res) => {
+  res.set('Cache-Control', 'no-store');
+  res.type('text/plain').send('ok');
+});
+
+// Elle teşhis için DB bağlantısını da sınayan ayrıntılı sağlık kontrolü.
 app.get('/api/health', async (_req, res) => {
   try {
     await q('SELECT 1');
@@ -81,7 +89,10 @@ app.get('/api/health', async (_req, res) => {
    Önbellek panelden kayıt sonrası anında, bunun dışında en geç TTL kadar
    sonra tazelenir. TTL olmadan, veritabanına panel dışından (bakım betiği,
    ikinci bir sunucu kopyası) yazılan değişiklikler hiç görünmüyordu. */
-const CONTENT_CACHE_TTL_MS = 60_000;
+// Panelden kayıtta bu önbellek anında yenilenir. Panel dışından DB'ye doğrudan
+// yazılan bir değişiklik ise en geç 15 dakikada alınır; böylece Neon gereksiz
+// sorgularla uyanık tutulmaz.
+const CONTENT_CACHE_TTL_MS = 15 * 60_000;
 let contentCache = null;
 let contentCachedAt = 0;
 
