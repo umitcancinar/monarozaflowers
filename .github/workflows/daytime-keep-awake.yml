@@ -1,0 +1,28 @@
+name: Daytime Render keep-awake
+
+on:
+  schedule:
+    # GitHub cron UTC kullanır. Türkiye yıl boyunca UTC+3:
+    # 03:00-20:45 UTC = 06:00-23:45 Europe/Istanbul.
+    # Saat başlarında cron yeniden başladığı için aralık hiçbir zaman 14 dakikayı
+    # geçmez; son 23:45 isteğinden 15 dakika sonra Render gece yarısı uyur.
+    - cron: '0,14,28,42,56 3-19 * * *'
+    - cron: '0,14,28,42,45 20 * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: daytime-render-keep-awake
+  cancel-in-progress: true
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping lightweight health endpoint
+        run: >-
+          curl --fail --silent --show-error
+          --retry 2 --retry-delay 10 --max-time 90
+          https://www.monarozaflowers.com/healthz
